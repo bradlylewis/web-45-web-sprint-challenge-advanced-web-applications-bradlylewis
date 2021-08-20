@@ -1,71 +1,60 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 
 const Login = () => {
-  const [ formValues, setFormValues ] = useState({ username: '', password: '' })
-  const [error, setError] = useState('');
-  
-  const handleChange = e => {
-    setFormValues({
-      ...formValues,
+  const [credentials, setCredentials] = useState({
+    username: '',
+    password: ''
+  })
+  const [error, setError] = useState('')
+  const { push } = useHistory();
+  const urlBase = 'http://localhost:5000/api'
+
+
+  // Handlers
+  const handleChange = (e) => {
+    setCredentials({
+      ...credentials,
       [e.target.name]: e.target.value
-    });
-  };
-  
-  const submitHandler = e => {
+    })
+  }
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (formValues.username !== 'Lambda' || formValues.password !== 'School') {
-      setError('Username or Password incorrect')
-    }
-    
-    axiosWithAuth()
-    .post('/api/login', formValues)
-    .then((res) => {
-      console.log("AXIOS POST", res)
+    axios.post(`${urlBase}/login`, credentials)
+      .then(res => {
+        console.log(res.data.payload);
         localStorage.setItem('token', res.data.payload)
-        push('/bubblepage')
-      })
-      .catch((err) => {
-        console.log({ err })
-      })
+        push('/protected')
+    })
+      .catch(error => {
+        console.log(error)
+    })
+
+    if (credentials.username === "" || credentials.password === '') {
+      setError('Username and password are required.') 
+    } else if (credentials.username !== 'Lambda' || credentials.password !== 'School'){
+      setError('Incorrect username or password.')
     }
-    
-    return (
-      <div>
+  };
+
+  return (
+    <div>
       <h1>Welcome to the Bubble App!</h1>
       <div data-testid="loginForm" className="login-form">
-        <h2>Build login form here</h2>
+        <h2>L O G I N</h2>
+        <form onSubmit={handleSubmit}>
+          <input id='username' name='username' placeholder= 'username' type='text' onChange={handleChange} value={credentials.username} />
+          <br />
+          <br />
+          <input id='password' name='password' placeholder= 'password' type='password' onChange={handleChange} value={credentials.password} />
+          <br />
+           <button>Login</button>
+        </form>
       </div>
 
-      <p id="error" className="error">{error}</p>
-
-      <form onSubmit={submitHandler}>
-
-          <label htmlFor="username">
-            Username
-          </label><br/>
-          <input
-            id="username"
-            name="username"
-            value={formValues.username}
-            data-testid="username"
-            onChange={handleChange}
-            /><br/><br/>
-
-          <label htmlFor="password">
-            Password
-          </label><br/>
-          <input
-            id="password"
-            name="password"
-            value={formValues.password}
-            data-testid="password"
-            onChange={handleChange}
-          /><br/>
-
-          <button id="submit">Login</button>
-
-        </form>
-
+      <p data-testid="errorMessage" className="error">{error}</p>
     </div>
   );
 };
