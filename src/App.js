@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import axiosWithAuth from "./helpers/axiosWithAuth";
 import "./styles.scss";
 
 // Components
@@ -7,11 +8,21 @@ import Login from "./components/Login";
 import PrivateRoute from './components/PrivateRoute'
 import BubblePage from './components/BubblePage'
 
+function App() {
+
 const logout = () => {
-  localStorage.removeItem("token");
+  console.log("LOGOUT");
+  
+  axiosWithAuth()
+    .post("/api/logout")
+    .then(res => {
+      localStorage.removeItem("token");
+      window.location.href = "Login";
+    })
+    .catch(err =>{ console.log(err);})
+
 }
 
-function App() {
   return (
     <Router>
       <div className="App">
@@ -19,10 +30,9 @@ function App() {
           Color Picker Sprint Challenge
           <a onClick={logout} data-testid="logoutButton" href="http://localhost:3000/">logout</a>
         </header>
-        <PrivateRoute exact path='/protected' component={BubblePage} />
+        <PrivateRoute exact path='/bubbles' component={BubblePage} />
         <Route exact path="/" component={Login} />
         <Route exact path="/login" component={Login} />
-
       </div>
     </Router>
   );

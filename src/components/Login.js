@@ -1,64 +1,71 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, {useState} from "react";
 import { useHistory } from "react-router";
 
 const Login = () => {
+  
   const [credentials, setCredentials] = useState({
-    username: '',
-    password: ''
+      username: "",
+      password: ""
   })
-  const [error, setError] = useState('')
-  const { push } = useHistory();
-  const urlBase = 'http://localhost:5000/api'
+  const [error, setError] = useState("");
+  const baseUrl = "http://localhost:5000/api";
+  const {push} = useHistory();
 
-
-  // Handlers
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value
-    })
+     })
   }
 
-  const handleSubmit = (e) => {
+
+  const login = (e) => {
     e.preventDefault();
-    axios.post(`${urlBase}/login`, credentials)
-      .then(res => {
-        console.log(res.data.payload);
-        localStorage.setItem('token', res.data.payload)
-        push('/protected')
+    axios.post(`${baseUrl}/login`, credentials)
+      .then(res =>{
+        localStorage.setItem("token", res.data.payload);
+        push("/bubbles");
     })
-      .catch(error => {
-        console.log(error)
+    .catch(error => {
+      setError("Please validate username and password");
+      console.log(error);
     })
-
-    if (credentials.username === "" || credentials.password === '') {
-      setError('Username and password are required.') 
-    } else if (credentials.username !== 'Lambda' || credentials.password !== 'School'){
-      setError('Incorrect username or password.')
-    }
-  };
-
+  }
+  
   return (
     <div>
-      <h1>Welcome to the Bubble App!</h1>
-      <div data-testid="loginForm" className="login-form">
-        <h2>L O G I N</h2>
-        <form onSubmit={handleSubmit}>
-          <input id='username' name='username' placeholder= 'username' type='text' onChange={handleChange} value={credentials.username} />
-          <br />
-          <br />
-          <input id='password' name='password' placeholder= 'password' type='password' onChange={handleChange} value={credentials.password} />
-          <br />
-           <button>Login</button>
+        <h1>Welcome to the Bubble App!</h1>
+        <div data-testid="loginForm" className="login-form">
+          <h2>Log in to pick your color</h2>
+        </div>
+  
+        <p id="error" className="error">{error}</p>
+
+        <form onSubmit={login}>
+          <input
+            id = "username"
+            type = "text"
+            name = "username"
+            value = {credentials.username}
+            onChange = {handleChange}
+            placeholder = {"username"}
+            />
+          <input
+            id = "password"
+            type ="password"
+            name ="password"
+            value ={credentials.password}
+            onChange ={handleChange}
+            placeholder = {"password"}
+            />
+          <button id = "submit">Login</button>
         </form>
       </div>
+    );
+  }
 
-      <p data-testid="errorMessage" className="error">{error}</p>
-    </div>
-  );
-};
-
+  
 export default Login;
 
 //Task List:
