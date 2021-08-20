@@ -18,20 +18,20 @@ In this project you will create a login page and request a token from the server
 
 ### Task 1: Project Setup
 
-* [ ] Fork and clone this repository.
-* [ ] Create a new branch with the 
-- [ ] Create a new branch: git checkout -b `<firstName-lastName>`.
-- [ ] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
-- [ ] Push commits: git push origin `<firstName-lastName>`.
-* [ ] **RUN** `npm install` to install your dependencies.
-* [ ] **RUN** `npm start` to start your application.
+* [X] Fork and clone this repository.
+* [X] Create a new branch with the 
+- [X] Create a new branch: git checkout -b `<firstName-lastName>`.
+- [X] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly.
+- [X] Push commits: git push origin `<firstName-lastName>`.
+* [X] **RUN** `npm install` to install your dependencies.
+* [X] **RUN** `npm start` to start your application.
 
 ### Task 2: CodeGrade Setup
 
-* [ ] Open the assignment in Canvas and click on the "Set up git" option.
-* [ ] Follow instructions to set up Codegrade's Webhook and Deploy Key, making sure your deployment is set to your `<firstName-lastName>`.
-* [ ] Push your first commit: `git commit --allow-empty -m "first commit" && git push`
-* [ ] Check to see that Codegrade has accepted your git submission.
+* [X] Open the assignment in Canvas and click on the "Set up git" option.
+* [X] Follow instructions to set up Codegrade's Webhook and Deploy Key, making sure your deployment is set to your `<firstName-lastName>`.
+* [X] Push your first commit: `git commit --allow-empty -m "first commit" && git push`
+* [X] Check to see that Codegrade has accepted your git submission.
 
 ### Task 3: Project Requirements
 
@@ -42,8 +42,8 @@ Your finished project must include all of the following requirements. **Unlike o
 #### Authentication
 > *Build a login form to authenticate your users along with all the components and utilities needed to support authentication.*
 
-* [ ] In `Login.js`, build all UI and state functionality needed to capture a username and password.
-* [ ] Add in two routes that display the login component, one for the default path '/' and one for the login path '/login'.
+* [X] In `Login.js`, build all UI and state functionality needed to capture a username and password.
+* [X] Add in two routes that display the login component, one for the default path '/' and one for the login path '/login'.
 * [ ] **Make sure that the input for your username and password includes the id="username" and id="password" attributes. Codegrade autotests will fail without them.**
 * [ ] Build in functionality that would allow an error to be displayed in the provided p tag if either the username or password is incorrect.
 * [ ] **Make sure your error p tag has an id="error" attribute attached. Codegrade autotests will fail without them.**
